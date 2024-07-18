@@ -8,8 +8,8 @@ app.use(express.json());
 
 mongoose.connect(process.env.MONGO_DB_URI, {
   ssl: true,
-  tlsAllowInvalidCertificates: true, // Ignore invalid certificates
-  tlsAllowInvalidHostnames: true,    // Ignore invalid hostnames
+  tlsAllowInvalidCertificates: true, 
+  tlsAllowInvalidHostnames: true,   
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch((error) => {
