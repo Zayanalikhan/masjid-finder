@@ -1,8 +1,23 @@
 import express from 'express'
-import { getNearbyMasjids } from '../controllers/masjidController.js';
+import { getNearbyMasjids, deleteData, deleteDataById, addMasjidImage } from '../controllers/masjidController.js';
+import  { getPrayerTimings, insertPrayer, updatePrayerTiming } from '../controllers/PrayerTimingsController.js';
+import authMiddleware from '../middleware/authenticationMiddleware.js';
+import authorizeAdmin from '../middleware/authorizationMiddleware.js';
 
-const masjidRoutes = express.Router();
+const router = express.Router();
 
-masjidRoutes.get('/nearby-masjids', getNearbyMasjids);
+router.get('/nearby-masjids', getNearbyMasjids);
 
-export default masjidRoutes
+router.delete('/delete-masjid', deleteData);
+
+router.delete('/delete-masjid/:id', deleteDataById);
+
+router.get('/prayer-timings/:masjidId', getPrayerTimings);
+
+router.post('/insert-timing', authMiddleware, authorizeAdmin, insertPrayer);
+
+router.put('/update-timing', authMiddleware, authorizeAdmin, updatePrayerTiming);
+
+router.post('/add-masjid-image', authMiddleware, addMasjidImage); 
+
+export default router
